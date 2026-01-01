@@ -3,12 +3,22 @@
   "version": "1.0.0",
   "description": "CodeChef Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon -r dotenv/config src/index.js"
   },
   "keywords": [
     "CodeChef23"
   ],
   "author": "Uthoai Marma",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.1.1",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.7.4"
+  }
 }
