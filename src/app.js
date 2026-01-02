@@ -19,12 +19,14 @@ app.use(cookieParser())
 //routes
 import userRouter from './routes/user.routes.js';
 import classSubjectRoutes from './routes/classSubject.routes.js';
+import subjectChapterRoutes from './routes/subjectChapter.routes.js';
 
 
 
 //routes declaration
 app.use("/api/v1/users", userRouter)    // http://localhost:8000/api/v1/users/register
 app.use("/api/v1/subjects", classSubjectRoutes)
+app.use("/api/v1/chapters", subjectChapterRoutes)
 
 
 export {app}
