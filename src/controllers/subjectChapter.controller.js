@@ -13,12 +13,11 @@ const createSubjectChapter = asyncHandler(async (req, res) => {
         subjectID,
         chapterName,
         chapterNo,
-        chapterFile,
         chapterFilePageSize
     } = req.body;
 
     if (
-        [subjectID, chapterName, chapterNo, chapterFile, chapterFilePageSize]
+        [subjectID, chapterName, chapterNo, chapterFilePageSize]
             .some(field => field === undefined || field === "")
     ) {
         throw new ApiError(400, "All fields are required");
@@ -26,6 +25,11 @@ const createSubjectChapter = asyncHandler(async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(subjectID)) {
         throw new ApiError(400, "Invalid subject ID");
+    }
+
+    const chapterFile = req.file ? req.file.path : null;
+    if (!chapterFile) {
+        throw new ApiError(400, "Chapter file is required");
     }
 
     // check subject exists
@@ -48,7 +52,7 @@ const createSubjectChapter = asyncHandler(async (req, res) => {
         subjectID,
         chapterName: chapterName.trim(),
         chapterNo,
-        chapterFile: chapterFile.trim(),
+        chapterFile: chapterFile,
         chapterFilePageSize
     });
 

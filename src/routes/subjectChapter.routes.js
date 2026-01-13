@@ -9,12 +9,13 @@ import {
 } from "../controllers/subjectChapter.controller.js";
 
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import {upload} from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
 
 router.route("/getAllSubjectChapters").get(getAllSubjectChapters)
-router.route("/createSubjectChapter").post(createSubjectChapter)
+router.route("/createSubjectChapter").post(upload.single("chapterFile"),createSubjectChapter)
 
 router.route("/getChaptersBySubjectId/:subjectId").get(getChaptersBySubjectId);
 
