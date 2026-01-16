@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { SubjectChapter } from "../models/subject.chapter.model.js";
 import { ClassSubject } from "../models/class.subject.model.js";
 import mongoose from "mongoose";
+import { cloudinaryUpload } from "../utils/cloudinary.js";
 
 /**
  * Create Subject Chapter
@@ -32,6 +33,14 @@ const createSubjectChapter = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Chapter file is required");
     }
 
+    const uploadedChapterFile = await cloudinaryUpload(chapterFile);
+
+    if (!uploadedChapterFile || !uploadedChapterFile.secure_url) {
+        throw new ApiError(500, "Failed to upload chapter file");
+    }
+
+    const chapterFileUrl = uploadedChapterFile.secure_url;
+
     // check subject exists
     const subjectExists = await ClassSubject.findById(subjectID);
     if (!subjectExists) {
@@ -52,7 +61,7 @@ const createSubjectChapter = asyncHandler(async (req, res) => {
         subjectID,
         chapterName: chapterName.trim(),
         chapterNo,
-        chapterFile: chapterFile,
+        chapterFile: chapterFileUrl,
         chapterFilePageSize
     });
 
